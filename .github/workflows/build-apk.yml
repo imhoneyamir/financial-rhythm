@@ -42,7 +42,13 @@ jobs:
       - name: Assemble Debug APK
         run: |
           cd android
-          ./gradlew :app:assembleDebug --stacktrace
+          if ! ./gradlew :app:assembleDebug --stacktrace > build.log 2>&1; then
+            echo "::error::Gradle failed! Last 25 lines:"
+            tail -n 25 build.log | while IFS= read -r line; do
+              echo "::error::$line"
+            done
+            exit 1
+          fi
 
       - name: Copy APK to Output
         run: |
