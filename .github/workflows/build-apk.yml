@@ -43,8 +43,12 @@ jobs:
         run: |
           cd android
           if ! ./gradlew :app:assembleDebug --stacktrace > build.log 2>&1; then
-            echo "::error::Gradle failed! Last 25 lines:"
-            tail -n 25 build.log | while IFS= read -r line; do
+            echo "::error::Gradle failed! What went wrong:"
+            grep -A 10 "* What went wrong:" build.log | while IFS= read -r line; do
+              echo "::error::$line"
+            done
+            echo "::error::Caused by:"
+            grep -m 3 -A 4 "Caused by:" build.log | while IFS= read -r line; do
               echo "::error::$line"
             done
             exit 1
