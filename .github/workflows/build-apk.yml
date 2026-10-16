@@ -29,6 +29,9 @@ jobs:
         run: npm ci
 
       - name: Build Web Production Assets
+        env:
+          VITE_SUPABASE_URL: https://qxupflaajwvsscqveyga.supabase.co
+          VITE_SUPABASE_ANON_KEY: sb_publishable_ftDZA-uUhbz3ZPtcv5_FGw_rdGr_PwC
         run: npm run build
 
       - name: Make Gradlew Executable
