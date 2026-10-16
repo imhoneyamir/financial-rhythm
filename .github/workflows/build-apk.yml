@@ -25,9 +25,6 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install Dependencies
         run: npm ci
 
@@ -43,7 +40,7 @@ jobs:
       - name: Assemble Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
