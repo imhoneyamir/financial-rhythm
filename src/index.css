@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #D6D1CA;
+    color: #171717;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom scrollbar hiding */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ambient glow */
+.bg-ambient-radial {
+  background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(246, 243, 236, 0.4) 100%);
+}
+
+/* Card gradient */
+.hero-card-gradient {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 50%, #F1EEFF 85%, #E6EEFE 100%);
+}
