@@ -34,8 +34,11 @@ jobs:
       - name: Make Gradlew Executable
         run: chmod +x ./android/gradlew
 
-      - name: Sync Capacitor to Android
-        run: npx cap sync android
+      - name: Copy Assets and Sync Capacitor
+        run: |
+          mkdir -p android/app/src/main/assets/public
+          cp -r dist/* android/app/src/main/assets/public/
+          npx cap sync android --verbose || (echo "Sync warning, ensuring copy" && npx cap copy android)
 
       - name: Assemble Debug APK
         run: |
