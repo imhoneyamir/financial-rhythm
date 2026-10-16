@@ -1,5 +1,10 @@
 {
 	"appId": "com.financialrhythm.app",
 	"appName": "Financial Rhythm",
-	"webDir": "dist"
+	"webDir": "dist",
+	"backgroundColor": "#FAF5EF",
+	"android": {
+		"backgroundColor": "#FAF5EF",
+		"allowMixedContent": true
+	}
 }

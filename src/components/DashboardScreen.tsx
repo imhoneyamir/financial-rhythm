@@ -4,8 +4,6 @@ import {
   MoreHorizontal, 
   Plus, 
   ChevronDown, 
-  Wifi, 
-  Battery, 
   ArrowRight
 } from 'lucide-react';
 import { NetflixIcon, FigmaIcon, SpotifyIcon, DropboxIcon, NotionIcon, AppleIcon, GoogleIcon, ChatGPTIcon } from './BrandIcons';
@@ -25,9 +23,13 @@ import type { Subscription, AppSettings } from '../types';
 
 interface DashboardScreenProps {
   onBackToOnboarding?: () => void;
+  onReplayOnboarding?: () => void;
 }
 
-export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onBackToOnboarding }) => {
+export const DashboardScreen: React.FC<DashboardScreenProps> = ({ 
+  onBackToOnboarding,
+  onReplayOnboarding
+}) => {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [subscriptions, setSubscriptions] = useState<Subscription[]>(initialSubscriptions);
   const [settings, setSettings] = useState<AppSettings>(defaultSettings);
@@ -124,19 +126,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onBackToOnboar
   };
 
   return (
-    <div className="w-full h-full bg-[#FAF5EF] flex flex-col justify-between relative select-none overflow-hidden">
+    <div className="w-full min-h-screen bg-[#FAF5EF] flex flex-col justify-between relative select-none overflow-hidden">
       {/* Scrollable Screen Content */}
-      <div className="flex-1 p-4 sm:p-5 overflow-y-auto no-scrollbar">
-        {/* Top Status Bar */}
-        <div className="flex items-center justify-between text-[#1E1E1E] text-xs font-semibold px-1 pt-1 opacity-90 mb-2">
-          <span>9:41</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[10px] tracking-tighter mr-0.5">5G</span>
-            <Wifi className="w-3.5 h-3.5" />
-            <Battery className="w-4 h-4 fill-current" />
-          </div>
-        </div>
-
+      <div className="flex-1 px-4 sm:px-5 pt-[max(env(safe-area-inset-top),16px)] pb-28 overflow-y-auto no-scrollbar">
         {/* TAB 1: OVERVIEW (Exact Screenshot UI) */}
         {activeTab === 'overview' && (
           <div className="space-y-3.5 pb-6 animate-fade-in">
@@ -336,7 +328,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onBackToOnboar
             <ProfileSection
               settings={settings}
               onUpdateSettings={handleUpdateSettings}
-              onReplayOnboarding={() => onBackToOnboarding && onBackToOnboarding()}
+              onReplayOnboarding={() => (onReplayOnboarding || onBackToOnboarding)?.()}
               onOpenAuth={() => setIsAuthModalOpen(true)}
               subscriptions={subscriptions}
             />
@@ -345,7 +337,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onBackToOnboar
       </div>
 
       {/* Floating Action Button (FAB) for Quick Add */}
-      <div className="absolute bottom-16 right-4 z-40">
+      <div className="fixed bottom-[calc(62px+max(env(safe-area-inset-bottom),12px))] right-5 z-40">
         <button
           onClick={() => setIsAddModalOpen(true)}
           className="w-[48px] h-[48px] rounded-full bg-[#181818] hover:bg-black text-white flex items-center justify-center shadow-fab active:scale-95 transition-all group ring-2 ring-white/10"

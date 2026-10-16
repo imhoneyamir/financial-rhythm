@@ -21,6 +21,20 @@ export const GlassSculpture: React.FC<GlassSculptureProps> = ({ useLive3D = fals
     setMousePos({ x: 0, y: 0 });
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (touch.clientX - rect.left) / rect.width - 0.5;
+      const y = (touch.clientY - rect.top) / rect.height - 0.5;
+      setMousePos({ x, y });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setMousePos({ x: 0, y: 0 });
+  };
+
   // Live Three.js Scene implementation
   useEffect(() => {
     if (!useLive3D || !mountRef.current) return;
@@ -132,6 +146,8 @@ export const GlassSculpture: React.FC<GlassSculptureProps> = ({ useLive3D = fals
       className="relative w-full h-[330px] flex items-center justify-center overflow-hidden select-none cursor-pointer group"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Soft Ambient Radial Behind the Glass */}
       <div className="absolute w-56 h-56 rounded-full bg-gradient-to-tr from-blue-300/30 via-purple-300/25 to-pink-200/30 blur-2xl pointer-events-none transform -translate-y-4" />

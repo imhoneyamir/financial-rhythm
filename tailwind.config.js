@@ -11,7 +11,7 @@ export default {
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
       },
       colors: {
-        canvas: '#D8D3CD',
+        canvas: '#FAF5EF',
         cream: {
           50: '#FDFBF7',
           100: '#FAF6EE',
