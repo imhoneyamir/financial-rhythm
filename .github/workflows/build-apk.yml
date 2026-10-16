@@ -51,13 +51,14 @@ jobs:
           name: gradle-failure-log
           path: android/gradle.log
 
-      - name: Locate APK File
+      - name: Copy APK to Output
         run: |
-          find android -name "*.apk" -ls
+          mkdir -p output
+          find android -name "*.apk" -ls -exec cp {} output/app-debug.apk \;
+          ls -lh output/
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: financial-rhythm-app-debug
-          path: android/**/*.apk
-          if-no-files-found: error
+          path: output/app-debug.apk
