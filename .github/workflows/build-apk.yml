@@ -42,14 +42,7 @@ jobs:
       - name: Assemble Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug --stacktrace 2>&1 | tee gradle.log
-
-      - name: Print & Upload Failure Log
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: gradle-failure-log
-          path: android/gradle.log
+          ./gradlew :app:assembleDebug --stacktrace
 
       - name: Copy APK to Output
         run: |
