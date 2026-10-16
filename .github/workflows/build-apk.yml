@@ -3,7 +3,12 @@ name: Build Android APK
 on:
   push:
     branches: [ main, master ]
+    tags:
+      - 'v*'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-apk:
@@ -73,3 +78,22 @@ jobs:
         with:
           name: financial-rhythm-app-debug
           path: output/app-debug.apk
+
+      - name: Publish GitHub Release (Direct APK Download)
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: output/app-debug.apk
+          name: Financial Rhythm v${{ github.ref_name }}
+          body: |
+            ## 📱 Financial Rhythm Android APK
+            
+            Directly download `app-debug.apk` onto your Android device to install the app.
+            
+            ### ✨ Features
+            - **3D Iridescent Holographic Ribbon** Onboarding with real-time gyro/touch physics
+            - **Dashboard** ($486.40 recurring banner, 62% budget gauge, horizontal billing cards, interactive Bézier spline curve)
+            - **5 Complete App Sections**: Home, Rhythm Analytics, Subscriptions Catalog, Timeline, and Profile
+            - **Live Supabase Sync** with offline cache fallback
+          draft: false
+          prerelease: false
